@@ -1,60 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Module } from '../types/module';
 
 interface SidebarProps {
   modules: Module[];
+  isCollapsed: boolean;
+  setIsCollapsed: (collapsed: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ modules }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar: React.FC<SidebarProps> = ({ modules, isCollapsed, setIsCollapsed }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <div 
       className={`bg-gray-800 text-white transition-all duration-300 flex flex-col ${
-        isCollapsed ? 'w-20' : 'w-64'
+        isMobile 
+          ? `fixed top-16 bottom-0 right-0 z-50 w-64 ${isCollapsed ? 'translate-x-full' : 'translate-x-0'}` 
+          : isCollapsed ? 'w-20' : 'w-64'
       }`}
     >
-      {/* Header */}
-      <div className={`border-b border-gray-700 transition-all duration-300 ${isCollapsed ? 'p-2' : 'p-4'}`}>
-        <div className={`flex items-center transition-all duration-300 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
-          {!isCollapsed && (
-            <h1 className="text-lg font-semibold truncate transition-all duration-300">Web Utilities</h1>
-          )}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1 rounded hover:bg-gray-700 transition-colors"
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            <svg 
-              className={`w-5 h-5 transition-transform ${isCollapsed ? 'rotate-180' : ''}`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+      {/* Header - Hidden on mobile since navbar shows title */}
+      {!isMobile && (
+        <div className={`border-b border-gray-700 transition-all duration-300 ${
+          isCollapsed ? 'p-2' : 'p-4'
+        }`}>
+          <div className={`flex items-center transition-all duration-300 ${
+            isCollapsed ? 'justify-center' : 'justify-between'
+          }`}>
+            {!isCollapsed && (
+              <h1 className="text-lg font-semibold truncate transition-all duration-300">Web Utilities</h1>
+            )}
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="p-1 rounded hover:bg-gray-700 transition-colors"
+              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M11 19l-7-7 7-7m8 14l-7-7 7-7" 
-              />
-            </svg>
-          </button>
+              <svg 
+                className={`w-5 h-5 transition-transform ${isCollapsed ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7" 
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Navigation */}
-      <nav className={`flex-1 transition-all duration-300 ${isCollapsed ? 'p-2' : 'p-4'}`}>
+      <nav className={`flex-1 transition-all duration-300 ${
+        isMobile ? 'p-4 pt-6' : (isCollapsed ? 'p-2' : 'p-4')
+      }`}>
         <ul className="space-y-2">
           {/* Home Link */}
-          <li className={`transition-all duration-300 ${isCollapsed ? 'h-12 flex justify-center' : ''}`}>
+          <li className={`transition-all duration-300 ${
+            isMobile ? '' : (isCollapsed ? 'h-12 flex justify-center' : '')
+          }`}>
             <NavLink
               to="/"
               className={({ isActive }) =>
                 `flex items-center rounded-lg transition-all duration-300 ${
-                  isCollapsed 
-                    ? 'w-12 h-12 justify-center' 
-                    : 'p-3'
+                  isMobile 
+                    ? 'p-3' 
+                    : (isCollapsed ? 'w-12 h-12 justify-center' : 'p-3')
                 } ${
                   isActive
                     ? 'bg-blue-600 text-white'
@@ -65,19 +91,21 @@ const Sidebar: React.FC<SidebarProps> = ({ modules }) => {
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
-              {!isCollapsed && <span className="ml-3 transition-all duration-300">Home</span>}
+              {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">Home</span>}
             </NavLink>
           </li>
 
           {/* Documentation Link */}
-          <li className={`transition-all duration-300 ${isCollapsed ? 'h-12 flex justify-center' : ''}`}>
+          <li className={`transition-all duration-300 ${
+            isMobile ? '' : (isCollapsed ? 'h-12 flex justify-center' : '')
+          }`}>
             <NavLink
               to="/docs"
               className={({ isActive }) =>
                 `flex items-center rounded-lg transition-all duration-300 ${
-                  isCollapsed 
-                    ? 'w-12 h-12 justify-center' 
-                    : 'p-3'
+                  isMobile 
+                    ? 'p-3' 
+                    : (isCollapsed ? 'w-12 h-12 justify-center' : 'p-3')
                 } ${
                   isActive
                     ? 'bg-blue-600 text-white'
@@ -88,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modules }) => {
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              {!isCollapsed && <span className="ml-3 transition-all duration-300">Documentation</span>}
+              {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">Documentation</span>}
             </NavLink>
           </li>
 
@@ -96,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modules }) => {
           {modules.length > 0 && (
             <li className="pt-4">
               <div className="border-t border-gray-700 mb-4 transition-all duration-300"></div>
-              {!isCollapsed && (
+              {(isMobile || !isCollapsed) && (
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider transition-all duration-300">
                   Utilities
                 </span>
@@ -134,7 +162,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modules }) => {
                     </svg>
                   )}
                 </div>
-                {!isCollapsed && <span className="ml-3 transition-all duration-300">{module.title}</span>}
+                {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">{module.title}</span>}
               </NavLink>
             </li>
           ))}
