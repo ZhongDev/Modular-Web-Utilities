@@ -186,8 +186,8 @@ This project is licensed under the GNU General Public License v3.0 (GPL-3.0). Se
 
 ## 🔗 Links
 
-- [Live Demo](#) - Coming soon
-- [Documentation](http://localhost:5173/docs) - In-app documentation
+- [Live Demo](https://toolbox.zhong.au/) - Hosted demo
+- [Documentation](https://toolbox.zhong.au/docs) - Online documentation
 - [Issues](../../issues) - Report bugs or request features
 
 ---
