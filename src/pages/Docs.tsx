@@ -189,7 +189,7 @@ export default YourModule;`}</code>
           </h3>
           <p className="text-gray-600 mb-4">
             Check out the{" "}
-            <code className="bg-gray-100 px-2 py-1 rounded">ExampleModule</code>{" "}
+            <code className="bg-gray-100 px-2 py-1 rounded">TextTransformer</code>{" "}
             in the sidebar to see a complete working example of a utility
             module.
           </p>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ExampleModule: React.FC = () => {
+const TextTransformer: React.FC = () => {
   const [input, setInput] = useState('');
   const [transformType, setTransformType] = useState<'uppercase' | 'lowercase' | 'reverse' | 'words'>('uppercase');
   const [result, setResult] = useState('');
@@ -148,7 +148,7 @@ const ExampleModule: React.FC = () => {
           This is an example utility module that demonstrates how to create modular utilities 
           in this toolbox. The module provides text transformation capabilities with a clean, 
           user-friendly interface. Check out the source code in{' '}
-          <code className="bg-blue-100 px-1 rounded">src/util-modules/ExampleModule/</code> 
+          <code className="bg-blue-100 px-1 rounded">src/util-modules/TextTransformer/</code> 
           to see how it's implemented.
         </p>
       </div>
@@ -156,4 +156,4 @@ const ExampleModule: React.FC = () => {
   );
 };
 
-export default ExampleModule;
+export default TextTransformer;

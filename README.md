@@ -63,7 +63,7 @@ extensible-web-utils/
 │   │   ├── Home.tsx       # Landing page
 │   │   └── Docs.tsx       # Documentation page
 │   ├── util-modules/      # 🎯 Add your utilities here!
-│   │   └── ExampleModule/ # Example text transformer utility
+│   │   └── TextTransformer/ # Example text transformer utility
 │   │       ├── index.tsx  # React component
 │   │       └── meta.ts    # Module metadata
 │   ├── types/             # TypeScript type definitions
@@ -169,7 +169,7 @@ util-modules/
 
 ## 📚 Documentation
 
-For detailed information on creating modules, visit the **Documentation** page in the application at `/docs` or check out the existing `ExampleModule` for reference.
+For detailed information on creating modules, visit the **Documentation** page in the application at `/docs` or check out the existing `TextTransformer` for reference.
 
 ## 🛠️ Built With
 
