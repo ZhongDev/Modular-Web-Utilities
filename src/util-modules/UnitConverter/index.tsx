@@ -70,21 +70,82 @@ const VOLUME_UNITS = {
   "gal (UK)": { name: "Gallons (UK)", factor: 4.54609 },
 } as const;
 
-type ConversionCategory = "energy" | "data" | "distance" | "weight" | "volume";
+// Temperature units (use Kelvin as base for conversion)
+const TEMPERATURE_UNITS = {
+  C: { name: "Celsius (°C)" },
+  F: { name: "Fahrenheit (°F)" },
+  K: { name: "Kelvin (K)" },
+  R: { name: "Rankine (°R)" },
+} as const;
+
+const toKelvin = (
+  value: number,
+  unit: keyof typeof TEMPERATURE_UNITS
+): number => {
+  switch (unit) {
+    case "K":
+      return value;
+    case "C":
+      return value + 273.15;
+    case "F":
+      return (value - 32) * (5 / 9) + 273.15;
+    case "R":
+      return value * (5 / 9);
+    default:
+      return value;
+  }
+};
+
+const fromKelvin = (
+  kelvin: number,
+  unit: keyof typeof TEMPERATURE_UNITS
+): number => {
+  switch (unit) {
+    case "K":
+      return kelvin;
+    case "C":
+      return kelvin - 273.15;
+    case "F":
+      return (kelvin - 273.15) * (9 / 5) + 32;
+    case "R":
+      return kelvin * (9 / 5);
+    default:
+      return kelvin;
+  }
+};
+
+type ConversionCategory =
+  | "energy"
+  | "data"
+  | "distance"
+  | "weight"
+  | "volume"
+  | "temperature";
 type EnergyUnit = keyof typeof ENERGY_UNITS;
 type DataUnit = keyof typeof DATA_UNITS;
 type DistanceUnit = keyof typeof DISTANCE_UNITS;
 type WeightUnit = keyof typeof WEIGHT_UNITS;
 type VolumeUnit = keyof typeof VOLUME_UNITS;
+type TemperatureUnit = keyof typeof TEMPERATURE_UNITS;
 
 const UnitConverter: React.FC = () => {
   const [category, setCategory] = useState<ConversionCategory>("energy");
   const [inputValue, setInputValue] = useState<string>("");
   const [sourceUnit, setSourceUnit] = useState<
-    EnergyUnit | DataUnit | DistanceUnit | WeightUnit | VolumeUnit
+    | EnergyUnit
+    | DataUnit
+    | DistanceUnit
+    | WeightUnit
+    | VolumeUnit
+    | TemperatureUnit
   >("kJ");
   const [targetUnit, setTargetUnit] = useState<
-    EnergyUnit | DataUnit | DistanceUnit | WeightUnit | VolumeUnit
+    | EnergyUnit
+    | DataUnit
+    | DistanceUnit
+    | WeightUnit
+    | VolumeUnit
+    | TemperatureUnit
   >("kcal");
   const [result, setResult] = useState<string>("");
 
@@ -105,6 +166,9 @@ const UnitConverter: React.FC = () => {
     } else if (category === "volume") {
       setSourceUnit("l");
       setTargetUnit("gal");
+    } else if (category === "temperature") {
+      setSourceUnit("C");
+      setTargetUnit("F");
     }
     setResult("");
   }, [category]);
@@ -150,6 +214,9 @@ const UnitConverter: React.FC = () => {
           numValue * VOLUME_UNITS[sourceUnit as VolumeUnit].factor;
         convertedValue =
           sourceInLiters / VOLUME_UNITS[targetUnit as VolumeUnit].factor;
+      } else if (category === "temperature") {
+        const k = toKelvin(numValue, sourceUnit as TemperatureUnit);
+        convertedValue = fromKelvin(k, targetUnit as TemperatureUnit);
       } else {
         setResult("Conversion error occurred");
         return;
@@ -203,6 +270,8 @@ const UnitConverter: React.FC = () => {
         return WEIGHT_UNITS;
       case "volume":
         return VOLUME_UNITS;
+      case "temperature":
+        return TEMPERATURE_UNITS;
       default:
         return ENERGY_UNITS;
     }
@@ -232,6 +301,7 @@ const UnitConverter: React.FC = () => {
               { value: "distance", label: "Distance Units", icon: "📏" },
               { value: "weight", label: "Weight Units", icon: "⚖️" },
               { value: "volume", label: "Volume Units", icon: "🧊" },
+              { value: "temperature", label: "Temperature Units", icon: "🌡️" },
             ].map((cat) => (
               <label key={cat.value} className="flex items-center">
                 <input
@@ -293,6 +363,7 @@ const UnitConverter: React.FC = () => {
                       | DistanceUnit
                       | WeightUnit
                       | VolumeUnit
+                      | TemperatureUnit
                   )
                 }
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -348,6 +419,7 @@ const UnitConverter: React.FC = () => {
                       | DistanceUnit
                       | WeightUnit
                       | VolumeUnit
+                      | TemperatureUnit
                   )
                 }
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -382,6 +454,7 @@ const UnitConverter: React.FC = () => {
                       | DistanceUnit
                       | WeightUnit
                       | VolumeUnit
+                      | TemperatureUnit
                   )
                 }
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -438,6 +511,7 @@ const UnitConverter: React.FC = () => {
                       | DistanceUnit
                       | WeightUnit
                       | VolumeUnit
+                      | TemperatureUnit
                   )
                 }
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
