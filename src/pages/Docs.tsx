@@ -2,10 +2,10 @@ import React from "react";
 
 const Docs: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 overflow-x-hidden">
       <h1 className="text-4xl font-bold text-gray-900 mb-8">Documentation</h1>
 
-      <div className="prose prose-lg max-w-none">
+      <div className="prose prose-lg max-w-none break-words">
         <section className="mb-12">
           <h2 className="text-3xl font-semibold text-gray-900 mb-4">
             Creating a New Utility Module
@@ -27,7 +27,7 @@ const Docs: React.FC = () => {
             </code>{" "}
             with your module name:
           </p>
-          <div className="bg-gray-900 text-green-400 p-4 rounded-lg mb-6 font-mono text-sm">
+          <div className="bg-gray-900 text-green-400 p-4 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
             <pre>{`src/util-modules/
 ├─ YourModuleName/
 │  ├─ index.tsx        # React component (required)
@@ -44,7 +44,7 @@ const Docs: React.FC = () => {
             <code className="bg-gray-100 px-2 py-1 rounded">meta.ts</code> file
             that exports the module configuration:
           </p>
-          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6">
+          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6 overflow-x-auto">
             <pre>
               <code>{`import { ModuleMeta } from '../../types/module';
 
@@ -73,7 +73,7 @@ export default meta;`}</code>
             <code className="bg-gray-100 px-2 py-1 rounded">index.tsx</code>{" "}
             file with your React component:
           </p>
-          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6">
+          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6 overflow-x-auto">
             <pre>
               <code>{`import React, { useState } from 'react';
 
@@ -138,7 +138,7 @@ export default YourModule;`}</code>
             <code className="bg-gray-100 px-2 py-1 rounded">ModuleMeta</code>{" "}
             interface:
           </p>
-          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6">
+          <div className="bg-gray-900 text-gray-100 p-4 rounded-lg mb-6 overflow-x-auto">
             <pre>
               <code>{`export interface ModuleMeta {
   title: string;        // Display name in sidebar
