@@ -16,23 +16,26 @@ A modular collection of web utilities built with React, TypeScript, and Vite. Th
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd extensible-web-utils
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -80,17 +83,19 @@ extensible-web-utils/
 Creating a new utility is simple! Just follow these steps:
 
 ### 1. Create the Module Folder
+
 ```bash
 mkdir src/util-modules/YourModuleName
 ```
 
 ### 2. Add Module Metadata (`meta.ts`)
-```typescript
-import { ModuleMeta } from '../../types/module';
 
-export const title = 'Your Module Title';
-export const route = '/your-module';
-export const icon = '🔧'; // Optional emoji or React element
+```typescript
+import { ModuleMeta } from "../../types/module";
+
+export const title = "Your Module Title";
+export const route = "/your-module";
+export const icon = "🔧"; // Optional emoji or React element
 
 // Or export as default
 const meta: ModuleMeta = { title, route, icon };
@@ -98,12 +103,13 @@ export default meta;
 ```
 
 ### 3. Create the Component (`index.tsx`)
+
 ```typescript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const YourModule: React.FC = () => {
-  const [input, setInput] = useState('');
-  
+  const [input, setInput] = useState("");
+
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold text-gray-900 mb-6">
@@ -120,6 +126,7 @@ export default YourModule;
 ### 4. That's It! 🎉
 
 Your module will be automatically:
+
 - ✅ Discovered by the build system
 - ✅ Added to the sidebar navigation
 - ✅ Registered as a new route
@@ -142,6 +149,7 @@ npm run test
 ```
 
 Create test files alongside your modules:
+
 ```
 util-modules/
 ├── YourModule/
