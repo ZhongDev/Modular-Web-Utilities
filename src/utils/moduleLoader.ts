@@ -12,8 +12,8 @@ export const loadModules = (): Module[] => {
       const meta = metaModule as { default?: ModuleMeta } & ModuleMeta;
       const moduleMeta = meta.default || meta;
       
-      if (!moduleMeta.title || !moduleMeta.route) {
-        console.warn(`Module at ${path} is missing required meta properties (title, route)`);
+      if (!moduleMeta.title || !moduleMeta.route || !moduleMeta.description) {
+        console.warn(`Module at ${path} is missing required meta properties (title, route, description)`);
         return;
       }
       
@@ -32,6 +32,7 @@ export const loadModules = (): Module[] => {
       modules.push({
         title: moduleMeta.title,
         route: moduleMeta.route,
+        description: moduleMeta.description,
         icon: moduleMeta.icon,
         Component,
       });

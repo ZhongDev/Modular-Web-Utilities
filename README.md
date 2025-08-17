@@ -95,10 +95,11 @@ import { ModuleMeta } from "../../types/module";
 
 export const title = "Your Module Title";
 export const route = "/your-module";
+export const description = "A short sentence describing what your module does.";
 export const icon = "🔧"; // Optional emoji or React element
 
 // Or export as default
-const meta: ModuleMeta = { title, route, icon };
+const meta: ModuleMeta = { title, route, description, icon };
 export default meta;
 ```
 

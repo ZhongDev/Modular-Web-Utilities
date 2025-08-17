@@ -50,12 +50,14 @@ const Docs: React.FC = () => {
 
 export const title = 'Your Module Title';
 export const route = '/your-module';
+export const description = 'A short sentence describing what your module does.';
 export const icon = '🔧'; // Optional: string or React element
 
 // Or export as default:
 const meta: ModuleMeta = {
   title: 'Your Module Title',
   route: '/your-module',
+  description: 'A short sentence describing what your module does.',
   icon: '🔧' // Optional
 };
 
@@ -143,6 +145,7 @@ export default YourModule;`}</code>
               <code>{`export interface ModuleMeta {
   title: string;        // Display name in sidebar
   route: string;        // URL path (e.g., '/my-tool')
+  description: string;  // Short description shown on the launcher
   icon?: ReactElement | string; // Optional icon (emoji or React element)
 }`}</code>
             </pre>
