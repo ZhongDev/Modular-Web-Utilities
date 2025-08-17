@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Module } from '../types/module';
 
 interface SidebarProps {
@@ -40,7 +40,11 @@ const Sidebar: React.FC<SidebarProps> = ({ modules, isCollapsed, setIsCollapsed 
             isCollapsed ? 'justify-center' : 'justify-between'
           }`}>
             {!isCollapsed && (
-              <h1 className="text-lg font-semibold truncate transition-all duration-300">Web Utilities</h1>
+              <h1 className="text-lg font-semibold truncate transition-all duration-300">
+                <Link to="/" className="text-white hover:text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">
+                  Web Utilities
+                </Link>
+              </h1>
             )}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
@@ -91,7 +95,32 @@ const Sidebar: React.FC<SidebarProps> = ({ modules, isCollapsed, setIsCollapsed 
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
-              {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">Home</span>}
+              {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">Launcher</span>}
+            </NavLink>
+          </li>
+
+          {/* About Link */}
+          <li className={`transition-all duration-300 ${
+            isMobile ? '' : (isCollapsed ? 'h-12 flex justify-center' : '')
+          }`}>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `flex items-center rounded-lg transition-all duration-300 ${
+                  isMobile 
+                    ? 'p-3' 
+                    : (isCollapsed ? 'w-12 h-12 justify-center' : 'p-3')
+                } ${
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`
+              }
+            >
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 18.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13z" />
+              </svg>
+              {(isMobile || !isCollapsed) && <span className="ml-3 transition-all duration-300">About</span>}
             </NavLink>
           </li>
 

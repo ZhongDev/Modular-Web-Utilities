@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface MobileNavbarProps {
   isCollapsed: boolean;
@@ -8,7 +9,11 @@ interface MobileNavbarProps {
 const MobileNavbar: React.FC<MobileNavbarProps> = ({ isCollapsed, setIsCollapsed }) => {
   return (
     <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-gray-800 text-white px-4 py-3 flex items-center justify-between shadow-lg">
-      <h1 className="text-lg font-semibold">Web Utilities</h1>
+      <h1 className="text-lg font-semibold">
+        <Link to="/" className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">
+          Web Utilities
+        </Link>
+      </h1>
       
       {isCollapsed ? (
         <button

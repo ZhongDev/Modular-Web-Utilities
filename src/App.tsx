@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Docs from './pages/Docs';
+import About from './pages/About';
 import { loadModules } from './utils/moduleLoader';
 
 const App: React.FC = () => {
@@ -13,7 +14,8 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout modules={modules} />}>
-          <Route index element={<Home />} />
+          <Route index element={<Home modules={modules} />} />
+          <Route path="about" element={<About />} />
           <Route path="docs" element={<Docs />} />
           
           {/* Dynamic routes for each utility module */}
